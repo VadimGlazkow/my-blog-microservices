@@ -6,6 +6,12 @@ pipeline {
     }
 
     stages {
+        stage('Clean up') {
+            steps {
+                sh 'docker-compose down -v || true'
+            }
+        }
+
         stage('Build') {
             steps {
                 sh 'docker-compose build'
