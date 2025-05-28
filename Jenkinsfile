@@ -8,11 +8,11 @@ pipeline {
         }
         stage('Build') {
             steps {
-                // Установка docker-compose
-                sh 'curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
-                sh 'chmod +x /usr/local/bin/docker-compose'
-                // Сборка Docker-образов
-                sh 'docker-compose build'
+                // Скачиваем и устанавливаем docker-compose во временную директорию
+                sh 'curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o ./docker-compose'
+                sh 'chmod +x ./docker-compose'
+                // Выполняем docker-compose с указанием пути
+                sh './docker-compose build'
             }
         }
         stage('Test') {
@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'docker-compose up -d'
+                sh './docker-compose up -d'
             }
         }
     }
