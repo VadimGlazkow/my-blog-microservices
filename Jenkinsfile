@@ -9,7 +9,6 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                checkout scm // вот это важный момент!
                 sh 'docker-compose build'
             }
         }
