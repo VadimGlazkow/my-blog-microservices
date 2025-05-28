@@ -137,7 +137,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # TELEGRAM_BOT_TOKEN = '8047604831:AAHQIh043V2aw1pxc5fGHvlwQh5tMBllwao'
 # TELEGRAM_CHAT_ID = 1763495465
 
-TELEGRAM_BOT_SERVICE_URL = "http://telegram_bot_service:8001"
+# TELEGRAM_BOT_SERVICE_URL = "http://telegram_bot_service:8001"
+TELEGRAM_BOT_SERVICE_URL = "https://my-telegram-bot.onrender.com"
 
 CHANNEL_LAYERS = {
     'default': {
@@ -147,3 +148,7 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://my-blog-microservices.onrender.com',
+]
