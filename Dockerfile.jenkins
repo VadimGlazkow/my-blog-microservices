@@ -2,6 +2,7 @@ FROM jenkins/jenkins:lts
 
 USER root
 
+
 # Устанавливаем зависимости и Docker CLI
 RUN apt-get update && apt-get install -y \
     curl \
@@ -23,7 +24,7 @@ RUN curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-c
   -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
 
 # Добавляем пользователя Jenkins в группу docker с GID = 1001 (соответствует хосту)
-RUN groupadd -g 1001 docker && usermod -aG docker jenkins
+RUN groupadd -g 999 docker && usermod -aG docker,root jenkins
 
 # Обеспечиваем права на /var/jenkins_home
 RUN mkdir -p /var/jenkins_home && chown -R 1000:1000 /var/jenkins_home
