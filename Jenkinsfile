@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    options {
+        skipDefaultCheckout() // Отключаем автоматический checkout
+    }
     environment {
         TELEGRAM_BOT_TOKEN = credentials('telegram-token')
         TELEGRAM_CHAT_ID = credentials('telegram-chat-id')
