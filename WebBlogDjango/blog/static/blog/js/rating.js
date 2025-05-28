@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const postId = element.getAttribute('data-post-id');
     console.log(`Connecting WebSocket for post ${postId}`);
     const wsProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const socket = new WebSocket(`${wsProtocol}:
+    // const socket = new WebSocket(`${wsProtocol}:
+    const socket = new WebSocket(`${wsProtocol}://${window.location.host}/ws/post/${postId}/`);
 
     socket.onopen = () => console.log(`WebSocket connected for post ${postId}`);
 
