@@ -1,33 +1,46 @@
 pipeline {
     agent any
 
-    options {
-        skipDefaultCheckout(true)
-    }
-
     stages {
         stage('Clean up') {
             steps {
-                sh 'docker-compose down -v || true'
+                dir("${env.WORKSPACE}") {
+                    sh 'docker-compose down -v || true'
+                }
             }
         }
 
         stage('Build') {
             steps {
-                sh 'docker-compose build'
+                dir("${env.WORKSPACE}") {
+                    sh 'docker-compose build'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                sh 'docker-compose run --rm blog_service pytest'
+                dir("${env.WORKSPACE}") {
+                    sh 'docker-compose run --rm blog_service pytest'
+                }
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'docker-compose up -d'
+                dir("${env.WORKSPACE}") {
+                    sh 'docker-compose up -d'
+                }
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline завершен'
+        }
+        failure {
+            echo 'Pipeline завершился с ошибкой'
         }
     }
 }
