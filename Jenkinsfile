@@ -2,17 +2,11 @@ pipeline {
     agent any
 
     environment {
-        TELEGRAM_BOT_TOKEN = credentials('telegram-bot-token')
+        TELEGRAM_BOT_TOKEN = credentials('telegram-token')
         TELEGRAM_CHAT_ID = credentials('telegram-chat-id')
     }
 
     stages {
-        stage('Clean up') {
-            steps {
-                sh 'docker-compose down -v || true'
-            }
-        }
-
         stage('Build') {
             steps {
                 sh 'docker-compose build'
