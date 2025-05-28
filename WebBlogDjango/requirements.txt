@@ -1,0 +1,10 @@
+django==4.2.20
+channels==4.0.0
+gunicorn==22.0.0
+uvicorn==0.30.6
+requests==2.32.3
+Pillow>=10.0.0
+channels>=4.0.0
+channels-redis>=4.0.0
+daphne>=4.0.0
+uvicorn[standard]>=0.23.0

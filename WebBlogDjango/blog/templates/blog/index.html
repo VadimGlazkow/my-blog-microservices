@@ -1,0 +1,61 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}Главная | Блог{% endblock %}
+
+{% block content %}
+  <div class="hero-container">
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Добро пожаловать в наш Блог!</h1>
+          <p>Делитесь историями, читайте вдохновляющие посты и находите единомышленников.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="featured-posts">
+    <div class="container">
+      <h2>Последние посты</h2>
+      <div class="post-grid">
+        {% for post in posts %}
+          <article class="post-card">
+            <img src="{% if post.image %}{{ post.image.url }}{% else %}https://placehold.co/600x400?text=No+Image{% endif %}" alt="{{ post.title }}">
+            <div class="post-content">
+              <h3>{{ post.title }}</h3>
+              <p>{{ post.content|truncatechars:100 }}</p>
+              <div class="post-meta">
+                <span>Автор: {{ post.user.first_name }} {{ post.user.last_name }}</span>
+                <span>{{ post.date_create|date:"d.m.Y" }}</span>
+              </div>
+              <div class="post-actions">
+                <div class="rating-buttons">
+                  <button class="like-btn {% if request.user in post.likes.all %}active{% endif %}"
+                          data-post-id="{{ post.id }}"
+                          data-action="{% if request.user in post.likes.all %}unlike{% else %}like{% endif %}"
+                          data-is-authenticated="{% if request.user.is_authenticated %}true{% else %}false{% endif %}">
+                    <span class="like-icon">👍</span>
+                    <span class="likes-count">{{ post.likes.count }}</span>
+                  </button>
+                  <button class="dislike-btn {% if request.user in post.dislikes.all %}active{% endif %}"
+                          data-post-id="{{ post.id }}"
+                          data-action="{% if request.user in post.dislikes.all %}undislike{% else %}dislike{% endif %}"
+                          data-is-authenticated="{% if request.user.is_authenticated %}true{% else %}false{% endif %}">
+                    <span class="dislike-icon">👎</span>
+                    <span class="dislikes-count">{{ post.dislikes.count }}</span>
+                  </button>
+                </div>
+                <a href="{% url 'post_detail' post.id %}" class="btn">Читать</a>
+              </div>
+            </div>
+          </article>
+        {% empty %}
+          <div class="no-posts">
+            <p>Пока нет постов. <a href="{% url 'create_blog' %}">Создайте первый!</a></p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block title %}Профиль | Блог{% endblock %}
+
+{% block content %}
+  <div class="profile-container">
+    <div class="container">
+      <section class="profile-header">
+        <div class="profile-avatar">
+          <img src="{% static 'blog/images/avatar.png' %}" alt="Аватар {{ user.first_name }}" class="avatar-large">
+        </div>
+        <div class="profile-info">
+          <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+          <p class="profile-email">{{ user.email }}</p>
+          <div class="profile-stats">
+            <div class="stat-item">
+              <span class="stat-number">{{ posts.count }}</span>
+              <span class="stat-label">Постов</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="user-posts">
+        <h2>Мои посты</h2>
+        {% if posts %}
+          <div class="post-grid">
+            {% for post in posts %}
+              <article class="post-card">
+                {% if post.image %}
+                  <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                {% else %}
+                  <img src="https://placehold.co/600x400?text=No+Image" alt="No image">
+                {% endif %}
+                <div class="post-content">
+                  <h3>{{ post.title }}</h3>
+                  <p>{{ post.content|truncatechars:100 }}</p>
+                  <div class="post-meta">
+                    <span>{{ post.date_create|date:"d.m.Y" }}</span>
+                  </div>
+                  <a href="{% url 'post_detail' post.id %}" class="btn">Читать</a> <!-- Обновленная ссылка -->
+                </div>
+              </article>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="no-posts">
+            <p>У вас пока нет постов. <a href="{% url 'create_blog' %}">Создайте первый!</a></p>
+          </div>
+        {% endif %}
+      </section>
+    </div>
+  </div>
+{% endblock %}

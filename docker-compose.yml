@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  blog_service:
+    build:
+      context: ./WebBlogDjango
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - TELEGRAM_BOT_SERVICE_URL=http://telegram_bot_service:8001
+      - REDIS_URL=redis://redis:6379/0
+    volumes:
+      - ./WebBlogDjango:/app
+    depends_on:
+      - telegram_bot_service
+      - redis
+
+  telegram_bot_service:
+    build:
+      context: ./telegram_bot_service
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+    volumes:
+      - ./telegram_bot_service:/app
+
+  redis:
+    image: redis:7.0
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:

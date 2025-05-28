@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Блог{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'blog/css/styles.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="{% url 'index' %}">
+        <img src="{% static 'blog/images/logo.png' %}" alt="Логотип блога" width="110">
+      </a>
+      <nav>
+        <ul>
+          <li><a href="{% url 'index' %}" class="nav-link {% if request.path == '/' %}active{% endif %}">Главная</a></li>
+          <li><a href="{% url 'about' %}" class="nav-link">О нас</a></li>
+        </ul>
+      </nav>
+      <div class="user-profile">
+        {% if user.is_authenticated %}
+          <div class="profile-dropdown">
+            <img src="{% static 'blog/images/avatar.png' %}" alt="Аватар" class="avatar">
+            <span class="user-name">{{ user.first_name }} {{ user.last_name }}</span>
+            <div class="dropdown-menu">
+              <a href="{% url 'profile' %}">Профиль</a>
+              <a href="{% url 'create_blog' %}">Создать пост</a>
+              <a href="{% url 'logout' %}">Выйти</a>
+            </div>
+          </div>
+        {% else %}
+          <div class="user-actions">
+            <a href="{% url 'login' %}" class="btn btn-secondary">Войти</a>
+            <a href="{% url 'register' %}" class="btn btn-primary">Регистрация</a>
+          </div>
+        {% endif %}
+      </div>
+      <div class="hamburger">☰</div>
+    </div>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Блог. Все права защищены.</p>
+      <div class="footer-links">
+        <a href="{% url 'about' %}">О проекте</a>
+        <a href="/privacy">Политика конфиденциальности</a>
+        <a href="/contact">Контакты</a>
+        <a href="/help">Помощь</a>
+        <a href="/terms">Условия использования</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{% static 'blog/js/main.js' %}"></script>
+  <script src="{% static 'blog/js/validation.js' %}"></script>
+  <script src="{% static 'blog/js/rating.js' %}"></script>
+</body>
+</html>

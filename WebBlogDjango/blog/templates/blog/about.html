@@ -1,0 +1,45 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}О нас | Блог{% endblock %}
+
+{% block content %}
+  <!-- Font Awesome for Social Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Hero Section -->
+  <div class="hero-container">
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1>О нас</h1>
+          <p>Я Вадим Глазков, студент ПИН-25. Этот блог — мой проект, где я делюсь идеями и вдохновляю других.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- About Content -->
+  <section class="about-section">
+    <div class="container">
+      <div class="about-content">
+        <h2>О проекте</h2>
+        <p>Этот блог — мой личный проект, созданный в рамках обучения в группе ПИН-25. Я, Глазков Вадим, разработал этот сайт, чтобы предоставить платформу для обмена историями, идеями и опытом. Моя цель — создать пространство, где каждый голос будет услышан.</p>
+        <p>Здесь вы найдете статьи на различные темы: от программирования и технологий до путешествий и здорового образа жизни. Блог создан для тех, кто хочет учиться, развиваться и находить единомышленников. Это мой первый шаг в веб-разработке, и я надеюсь, что проект будет полезен и интересен!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact-section">
+    <div class="container">
+      <h2>Свяжитесь со мной</h2>
+      <p>Хотите предложить идеи для блога, обсудить сотрудничество или просто поделиться впечатлениями? Найдите меня в социальных сетях или напишите на почту!</p>
+      <div class="social-links">
+        <a href="https://vk.com" title="VK"><i class="fab fa-vk"></i></a>
+        <a href="https://t.me" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
+        <a href="mailto:example@email.com" title="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+  </section>
+{% endblock %}

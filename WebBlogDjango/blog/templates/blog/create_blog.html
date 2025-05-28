@@ -1,0 +1,62 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}Создать пост | Блог{% endblock %}
+
+{% block content %}
+  <!-- Hero-секция -->
+  <div class="hero-container">
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Создать новый пост</h1>
+          <p>Поделитесь своими идеями и вдохновите других! Напишите заголовок, текст и добавьте изображение.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Форма создания поста -->
+  <section class="form-section">
+    <div class="container">
+      <h2>Новый пост</h2>
+      <form class="create-form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+          {{ form.title.label_tag }}
+          {{ form.title }}
+          <div class="error-message">
+            {{ form.title.errors }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          {{ form.content.label_tag }}
+          {{ form.content }}
+          <div class="error-message">
+            {{ form.content.errors }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          {{ form.image.label_tag }}
+          {{ form.image }}
+          <div class="error-message">
+            {{ form.image.errors }}
+          </div>
+        </div>
+
+        {% if form.non_field_errors %}
+    <div class="general-error-container" style="display: block;">
+      <div class="general-error-message">
+        {{ form.non_field_errors }}
+      </div>
+    </div>
+  {% endif %}
+
+        <button type="submit" class="btn btn-primary">Опубликовать</button>
+      </form>
+    </div>
+  </section>
+{% endblock %}
