@@ -138,7 +138,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # TELEGRAM_CHAT_ID = 1763495465
 
 # TELEGRAM_BOT_SERVICE_URL = "http://telegram_bot_service:8001"
-TELEGRAM_BOT_SERVICE_URL = "https://my-telegram-bot.onrender.com"
+TELEGRAM_BOT_SERVICE_URL = "https://telegram-bot-service-1u8n.onrender.com"
 
 CHANNEL_LAYERS = {
     'default': {
