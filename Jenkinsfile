@@ -28,6 +28,16 @@ pipeline {
                 sh 'docker-compose build'
             }
         }
+        stage('Prepare Network') {
+            steps {
+                // Останавливаем и удаляем все контейнеры, чтобы освободить сеть
+                sh 'docker-compose down || true'
+                // Удаляем старую сеть, игнорируя ошибки, если она уже удалена
+                sh 'docker network rm blog-ci-cd_default || true'
+                // Перестраиваем и запускаем сервисы в фоновом режиме для создания новой сети
+                sh 'docker-compose up -d'
+            }
+        }
         stage('Test') {
             steps {
                 sh 'docker-compose run --rm blog_service pytest'
