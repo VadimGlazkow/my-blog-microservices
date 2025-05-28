@@ -7,21 +7,9 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/main']],
-                    userRemoteConfigs: [[
-                        url: 'https://github.com/VadimGlazkow/my-blog-microservices',
-                        credentialsId: 'github-token'
-                    ]]
-                ])
-            }
-        }
-
         stage('Build') {
             steps {
+                checkout scm // вот это важный момент!
                 sh 'docker-compose build'
             }
         }
