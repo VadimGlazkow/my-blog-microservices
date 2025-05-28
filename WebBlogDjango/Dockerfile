@@ -20,4 +20,6 @@ RUN python manage.py collectstatic --noinput
 # Запускаем сервер с Daphne
 # CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "WebBlogDjango.asgi:application"]
 
-CMD ["daphne", "WebBlogDjango.asgi:application"]
+# CMD ["daphne", "WebBlogDjango.asgi:application"]
+
+CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "WebBlogDjango.asgi:application"]
