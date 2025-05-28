@@ -1,0 +1,28 @@
+FROM jenkins/jenkins:lts
+
+USER root
+
+# Устанавливаем зависимости и Docker CLI
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+RUN apt-get update && apt-get install -y docker-ce-cli
+
+# Устанавливаем docker-compose
+RUN curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+RUN chmod +x /usr/local/bin/docker-compose
+
+# Даем Jenkins права на Docker
+RUN groupadd -f docker && usermod -aG docker jenkins
+
+# Создаем директорию /var/jenkins_home и задаем права для пользователя jenkins (UID 1000)
+RUN mkdir -p /var/jenkins_home && chown -R 1000:1000 /var/jenkins_home
+
+USER jenkins
