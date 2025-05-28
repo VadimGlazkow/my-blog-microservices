@@ -7,6 +7,20 @@ pipeline {
     }
 
     stages {
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+
+        stage('Checkout SCM') {
+            steps {
+                sh 'ls -la'
+                sh 'git status || echo "Not a git repository"'
+                checkout scm
+            }
+        }
+
         stage('Build') {
             steps {
                 sh 'docker-compose build'
@@ -28,7 +42,7 @@ pipeline {
 
     post {
         always {
-            echo 'Pipeline завершен'
+            echo 'Pipeline завершён'
         }
         failure {
             echo 'Pipeline завершился с ошибкой'
