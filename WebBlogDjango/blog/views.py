@@ -144,17 +144,17 @@ def rate_post(request, post_id):
     else:
         return JsonResponse({'status': 'error', 'message': 'Invalid action'}, status=400)
 
-    channel_layer = get_channel_layer()
-    async_to_sync(channel_layer.group_send)(
-        f'post_{post_id}',
-        {
-            'type': 'post_update',
-            'likes_count': post.total_likes(),
-            'dislikes_count': post.total_dislikes(),
-            'user_liked': request.user in post.likes.all(),
-            'user_disliked': request.user in post.dislikes.all(),
-        }
-    )
+    # channel_layer = get_channel_layer()
+    # async_to_sync(channel_layer.group_send)(
+    #     f'post_{post_id}',
+    #     {
+    #         'type': 'post_update',
+    #         'likes_count': post.total_likes(),
+    #         'dislikes_count': post.total_dislikes(),
+    #         'user_liked': request.user in post.likes.all(),
+    #         'user_disliked': request.user in post.dislikes.all(),
+    #     }
+    # )
 
     return JsonResponse({
         'status': 'success',
