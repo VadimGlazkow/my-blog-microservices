@@ -3,23 +3,23 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Клонируем репозиторий
                 git url: 'https://github.com/VadimGlazkow/my-blog-microservices.git', branch: 'main'
             }
         }
         stage('Build') {
             steps {
-                // Сборка Docker-образов через docker-compose
+                // Установка docker-compose
+                sh 'curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
+                sh 'chmod +x /usr/local/bin/docker-compose'
+                // Сборка Docker-образов
                 sh 'docker-compose build'
             }
         }
         stage('Test') {
             steps {
-                // Если есть тесты для blog_service, выполняем их
                 dir('WebBlogDjango') {
-                    sh 'python manage.py test || true' // || true позволяет продолжить, даже если тесты не проходят
+                    sh 'python manage.py test || true'
                 }
-                // Если есть тесты для telegram_bot_service, добавь их сюда
                 dir('telegram_bot_service') {
                     sh 'echo "Тесты для telegram_bot_service пока не настроены"'
                 }
@@ -27,7 +27,6 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                // Запускаем сервисы в detached-режиме
                 sh 'docker-compose up -d'
             }
         }
