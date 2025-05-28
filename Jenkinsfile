@@ -1,11 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
-            steps {
-                git url: 'https://github.com/VadimGlazkow/my-blog-microservices.git', branch: 'main'
-            }
-        }
         stage('Build') {
             steps {
                 // Скачиваем и устанавливаем docker-compose
