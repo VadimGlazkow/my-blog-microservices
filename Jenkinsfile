@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-    TELEGRAM_BOT_TOKEN = 'your-real-token'
-    TELEGRAM_CHAT_ID   = 'your-chat-id'
+        TELEGRAM_BOT_TOKEN = 'your-token-here'
+        TELEGRAM_CHAT_ID   = 'your-chat-id-here'
     }
 
     stages {
@@ -13,15 +13,13 @@ pipeline {
             }
         }
 
-        stage('Clean Workspace') {
-            steps {
-                cleanWs()
-            }
-        }
+        // ❌ Удалили Clean Workspace, т.к. он всё ломает
+        // Если нужна ручная очистка — делаем выборочно, не удаляя .yml и .git
 
         stage('Build') {
             steps {
                 script {
+                    sh 'ls -la' // для отладки: убедимся, что .yml на месте
                     sh 'docker-compose build'
                 }
             }
@@ -30,21 +28,18 @@ pipeline {
         stage('Prepare Network') {
             steps {
                 echo 'Preparing network...'
-                // Добавьте действия при необходимости
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                // Добавьте тестовые команды, если есть
             }
         }
 
         stage('Deploy') {
             steps {
                 echo 'Deploying application...'
-                // Добавьте команды деплоя
             }
         }
     }
