@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-    TELEGRAM_BOT_TOKEN = credentials('telegram_bot_token')
-    TELEGRAM_CHAT_ID   = credentials('telegram_chat_id')
-}
+        TELEGRAM_BOT_TOKEN = 'your-token-here'
+        TELEGRAM_CHAT_ID   = 'your-chat-id-here'
+    }
 
     stages {
         stage('Checkout SCM') {
