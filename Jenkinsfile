@@ -8,10 +8,10 @@ pipeline {
         }
         stage('Build') {
             steps {
-                // Скачиваем и устанавливаем docker-compose во временную директорию
+                // Скачиваем и устанавливаем docker-compose
                 sh 'curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o ./docker-compose'
                 sh 'chmod +x ./docker-compose'
-                // Выполняем docker-compose с указанием пути
+                // Выполняем docker-compose
                 sh './docker-compose build'
             }
         }
